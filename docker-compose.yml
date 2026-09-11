@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  gvtmonitor:
+    build:
+      context: /pendriver/gvtmonitor
+      dockerfile: Dockerfile
+    ports:
+      - '3030:3030'
+    environment:
+      - PORT=3030
+      - SERVER_HOST=${SERVER_HOST}
+      - SERVER_PORT=${SERVER_PORT:-22}
+      - SERVER_USER=${SERVER_USER}
+      - SERVER_PASSWORD=${SERVER_PASSWORD:-}
+      - SERVER_KEY_PATH=${SERVER_KEY_PATH:-}
+      - ALLOWED_SERVICES=${ALLOWED_SERVICES:-docker,ssh}
+    volumes:
+      - /var/log:/var/log:ro
+    restart: unless-stopped
